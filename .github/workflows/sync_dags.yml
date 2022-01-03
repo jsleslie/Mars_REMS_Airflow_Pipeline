@@ -58,3 +58,5 @@ jobs:
           AWS_REGION: 'us-west-2'
           SOURCE_DIR: 'plugins.zip'
           DEST_DIR: 'plugins.zip'
+      - run: |
+          ls
