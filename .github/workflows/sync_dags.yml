@@ -41,7 +41,7 @@ jobs:
           SOURCE_DIR: 'requirements'
           DEST_DIR: 'requirements.txt'
 
-  zip_plugins:
+  deploy_zipped_plugins:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
@@ -50,13 +50,6 @@ jobs:
         with:
           files: plugins/ 
           dest: plugins.zip
-
-
-  deploy_plugins:
-    runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    steps:
-      - uses: actions/checkout@master
       - uses: jakejarvis/s3-sync-action@master
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
