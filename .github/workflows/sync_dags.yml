@@ -50,6 +50,8 @@ jobs:
         with:
           files: plugins/ 
           dest: plugins.zip
+      - run: |
+          ls
       - uses: jakejarvis/s3-sync-action@master
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
@@ -58,5 +60,4 @@ jobs:
           AWS_REGION: 'us-west-2'
           SOURCE_DIR: 'plugins.zip'
           DEST_DIR: 'plugins.zip'
-      - run: |
-          ls
+      
