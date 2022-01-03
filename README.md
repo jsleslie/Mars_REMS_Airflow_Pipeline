@@ -1,5 +1,5 @@
-# Mars_REMS_Airflow_Pipeline
-Udacity Data Engineering Capstone Project on the ETL of the Mars Curiosity Rover environmental data into S3 then a Redshift datawarehouse
+# Mars Environment Data Lake & Airflow Pipeline
+Udacity Data Engineering Capstone Project
 
 ![DAG Testing workflow](https://github.com/jsleslie/Mars_REMS_Airflow_Pipeline/actions/workflows/test_dags.yml/badge.svg)
 
@@ -15,3 +15,17 @@ The project follows the follow steps:
 * Step 3: Define the Data Model
 * Step 4: Run ETL to Model the Data
 * Step 5: Complete Project Write Up
+
+
+
+## Project Scope and Data Sources
+
+
+
+## References
+
+- [Jet Propulsion Laboratory. Mars Science Laboratory (MSL) Software Interface Specification (SIS) Rover Environmental Monitoring Station (REMS) Experiment Data Record (EDR). Jan 31, 2013.](https://atmos.nmsu.edu/PDS/data/mslrem_0001/DOCUMENT/MSL_REMS_EDR_SIS.PDF)  
+- [The Open University. OpenMars Ozone Column Database. February 2019](https://ordo.open.ac.uk/articles/dataset/OpenMARS_ozone_column_database/7315430)
+- [Baum, Mark. REMS Data Downloader. Accessed December 4, 2021.](https://github.com/markmbaum/REMS)
+- [Programmatic Ponderings. DevOps for DataOps: Building a CI/CD Pipeline for Apache Airflow DAGs](https://programmaticponderings.com/tag/apache-airflow/)
+
