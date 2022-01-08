@@ -1,4 +1,4 @@
-# Mars Environment Data Lake & Airflow Pipeline
+# Mars Environment Redshift Data Warehouse & Airflow Pipeline
 Udacity Data Engineering Capstone Project
 
 ![DAG Testing workflow](https://github.com/jsleslie/Mars_REMS_Airflow_Pipeline/actions/workflows/test_dags.yml/badge.svg)
@@ -7,7 +7,9 @@ Udacity Data Engineering Capstone Project
 
 
 ## Project Summary
-This project combines multiple data sets on Mars observations and modelled weather data and organises it into an Amazon Redshift data lake. As part of this work, the data will be uploaded to S3 after which the data will be read from S3, processed using Spark and loaded back into S3 as a set of fact and dimensional tables.
+This project combines multiple data sets on Mars observations and modelled weather data and organises it into an Amazon Redshift data warehouse via an Apache Airflow managed data pipeline. As part of this work, the data will be uploaded to S3 after which the data will be read from S3, then loading into staging tables in Redshift before the creation of fact and dimension tables. An overview of the ETL pipeline is provided in the Directed Acyclic Graph (DAG) below:
+
+![capstone_dag](img/capstone_dag.png)
 
 The project follows the follow steps:
 * Step 1: Scope the Project and Gather Data
