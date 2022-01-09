@@ -52,23 +52,9 @@ local_relative_humidity| FLOAT  |  local relative humidity at humidity sensor (%
 | time_id  | VARCHAR  | generated primary key  |
 |  sol | INT  | day of the mission  |
 | timestamp  | BIGINT  | number of seconds since noon 1-Jan-2000 (seconds) |
-| lmst  |  VARCHAR |  Local Mean Solar Time. It is in the format
-                           SSSSSMHH:MM:SS.sss where:
-                           SS  - Sol number (00000-99999)
-                           M   - sol/time separator
-                           HH  - hour (0-23)
-                           MM  - minute (0-59)
-                           SS  - second (0-59)
-                           sss - fractions of second (000-999) |
-| ltst  | VARCHAR  |  Local True Solar Time with respect to the 
-                           rover position. It is in the format 
-                           SSSSS HH:MM:SS.sss where:
-                           SS  - Sol number (00000-99999)
-                           HH  - hour (0-23)
-                           MM  - minute (0-59)
-                           SS  - second (0-59) |
-| solar_longitude_angle  |  FLOAT | Solar azimuth angle relative to REMS rover
-                           frame (degrees)  |
+| lmst  |  VARCHAR |  Local Mean Solar Time. It is in the format SSSSSMHH:MM:SS.sss where: <br>SS  - Sol number (00000-99999)<br>M   - sol/time separator<br>HH  - hour (0-23)<br>MM  - minute (0-59)<br>SS  - second (0-59)<br>sss - fractions of second (000-999) |
+| ltst  | VARCHAR  |  Local True Solar Time with respect to the rover position. It is in the format SSSSS HH:MM:SS.sss where:<br>SS  - Sol number (00000-99999)<br>HH  - hour (0-23)<br>MM  - minute (0-59)<br>SS  - second (0-59) |
+| solar_longitude_angle  |  FLOAT | Solar azimuth angle relative to REMS rover frame (degrees)  |
 | solar_zenithal_angle  |  FLOAT |  Solar elevation angle relative to REMS rover frame (degrees)  |
 
 
@@ -77,8 +63,7 @@ local_relative_humidity| FLOAT  |  local relative humidity at humidity sensor (%
 |---|---|---|
 | location_id  |  VARCHAR | generated primary key  |
 | rover_position_x  | FLOAT  |  x-component of the rover's position relative to landing site where +X is along the local north direction (meters) |
-| rover_position_y  | FLOAT  |  y-component of the rover's position
-                           relative to landing site where +Y is along the local east direction (meters) |
+| rover_position_y  | FLOAT  |  y-component of the rover's position relative to landing site where +Y is along the local east direction (meters) |
 | rover_position_z  | FLOAT  |  z-component of the rover's position relative to landing site where +Z is an increase in elevation (meters) |
 | rover_velocity  | FLOAT  |  rover velocity in meters/hour |
 | rover_pitch  |  FLOAT | counterclockwise rotation angle about the Y-axis   |
