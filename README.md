@@ -32,6 +32,61 @@ This data product is a readshift database with staging tables (`stg_rems_env` an
 
 ![data_model](img/data_model.png)
 
+### Measures Fact Table
+|**Table Column**   |**Data Type**   | **Description**   |
+|---|---|---|
+| measure_id  | VARCHAR  | generated primary key  |
+|  sol |  INT |  day of the mission |
+| location_id  | VARCHAR  | generated foreign key  |
+| time_id  |  VARCHAR |  generated foreign key |
+| ambient_temp  |  FLOAT | estimated ambient air temperature (Kelvin)  |
+| pressure  | FLOAT  | Atmospheric pressure (Pascal)  |
+| horizontal_wind_speed  | FLOAT  |  horizontal wind speed (meters/second) |
+| vertical_wind_speed  | FLOAT  | vertical wind speed (meters/second)  |
+| volume_mixing_ratio  | FLOAT  | volume mixing ratio of water vapour (ppm)  |
+local_relative_humidity| FLOAT  |  local relative humidity at humidity sensor (%) |   
+
+### Time Dimension Table
+|**Table Column**   |**Data Type**   | **Description**   |
+|---|---|---|
+| time_id  | VARCHAR  | generated primary key  |
+|  sol | INT  | day of the mission  |
+| timestamp  | BIGINT  | number of seconds since noon 1-Jan-2000 (seconds) |
+| lmst  |  VARCHAR |  Local Mean Solar Time. It is in the format
+                           SSSSSMHH:MM:SS.sss where:
+                           SS  - Sol number (00000-99999)
+                           M   - sol/time separator
+                           HH  - hour (0-23)
+                           MM  - minute (0-59)
+                           SS  - second (0-59)
+                           sss - fractions of second (000-999) |
+| ltst  | VARCHAR  |  Local True Solar Time with respect to the 
+                           rover position. It is in the format 
+                           SSSSS HH:MM:SS.sss where:
+                           SS  - Sol number (00000-99999)
+                           HH  - hour (0-23)
+                           MM  - minute (0-59)
+                           SS  - second (0-59) |
+| solar_longitude_angle  |  FLOAT | Solar azimuth angle relative to REMS rover
+                           frame (degrees)  |
+| solar_zenithal_angle  |  FLOAT |  Solar elevation angle relative to REMS rover frame (degrees)  |
+
+
+### Location Dimension Table
+|**Table Column**   |**Data Type**   | **Description**   |
+|---|---|---|
+| location_id  |  VARCHAR | generated primary key  |
+| rover_position_x  | FLOAT  |  x-component of the rover's position relative to landing site where +X is along the local north direction (meters) |
+| rover_position_y  | FLOAT  |  y-component of the rover's position
+                           relative to landing site where +Y is along the local east direction (meters) |
+| rover_position_z  | FLOAT  |  z-component of the rover's position relative to landing site where +Z is an increase in elevation (meters) |
+| rover_velocity  | FLOAT  |  rover velocity in meters/hour |
+| rover_pitch  |  FLOAT | counterclockwise rotation angle about the Y-axis   |
+| rover_yaw  |  FLOAT | counterclockwise rotation angle about the Z-axis  |
+| rover_roll |  FLOAT | counterclockwise rotation angle about the X-axis  |   
+
+
+
 ## Datasets Used
 There are 2 main datasets used from NASA's Planertary Data System on the Mars Curiosity Rover Environment Monitoring Station (REMS) found [here](https://atmos.nmsu.edu/PDS/data/mslrem_1001/):
 * **REMS Environment data set**: This data set
