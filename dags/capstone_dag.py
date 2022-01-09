@@ -3,10 +3,6 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
-
-# import download_REMS_s3
-# import download_Ozone_s3
-import boto3
 from operators import (
     StageToRedshiftOperator,
     LoadFactOperator,
@@ -18,13 +14,13 @@ from helpers import SqlQueries, download_REMS_s3
 #
 # The following DAG performs the following functions:
 #
-#       1. Uploads Mars data from local system to S3
-#       2. Stages data from S3 into Redshift
-#       3. Performs a data quality check on the REMS and Ozone tables in Redshift
-#       4. Uses the FactsCalculatorOperator to create a Facts table in Redshift
-#           a. **NOTE**: to complete this step you must complete the FactsCalcuatorOperator
-#              skeleton defined in plugins/operators/facts_calculator.py
-#
+#   1. Uploads Mars data from local system to S3
+#   2. Stages data from S3 into Redshift
+#   3. Performs a data quality check on the REMS and Ozone tables in Redshift
+#   4. Uses the FactsCalculatorOperator to create a Facts table in Redshift
+#       a. **NOTE**: to complete this step you must complete the
+#          FactsCalcuatorOperatorskeleton defined in
+#          plugins/operators/facts_calculator.py
 
 default_args = {
     "owner": "Airflow",
@@ -91,15 +87,18 @@ with DAG(
         task_id="Run_data_quality_checks",
         dq_checks=[
             {
-                "check_sql": "SELECT COUNT(*) FROM measures WHERE measure_id is null",
+                "check_sql":
+                "SELECT COUNT(*) FROM measures WHERE measure_id is null",
                 "expected_result": 0,
             },
             {
-                "check_sql": "SELECT COUNT(*) FROM time WHERE  time_id is null",
+                "check_sql":
+                "SELECT COUNT(*) FROM time WHERE  time_id is null",
                 "expected_result": 0,
             },
             {
-                "check_sql": "SELECT COUNT(*) FROM location WHERE  location_id is null",
+                "check_sql":
+                "SELECT COUNT(*) FROM location WHERE  location_id is null",
                 "expected_result": 0,
             },
         ],
