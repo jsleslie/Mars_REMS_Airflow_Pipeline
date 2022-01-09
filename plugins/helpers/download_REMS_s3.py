@@ -70,8 +70,7 @@ def get_links(url):
     return links
 
 
-def download(url, record_type, sol, colnums,
-             targ_cols, outdir, folder_name):
+def download(url, record_type, sol, colnums, targ_cols, outdir, folder_name):
     # extract data
     table = get_file(url)
     # remove unwanted values
@@ -134,10 +133,10 @@ def run_extract(targ_cols, record_type, labelname, folder_name):
         if "COLUMN_NUMBER" in lines[i]:
             # get the column number
             line = lines[i]
-            colnum = int(line[line.index("=") + 1:].strip()) - 1
+            colnum = int(line[line.index("=") + 1 :].strip()) - 1
             # get the column name/description from the following line
             line = lines[i + 1]
-            colname = line[line.index("=") + 1:].strip().replace('"', "")
+            colname = line[line.index("=") + 1 :].strip().replace('"', "")
             # save the column num and name
             name2num[colname] = colnum
 
