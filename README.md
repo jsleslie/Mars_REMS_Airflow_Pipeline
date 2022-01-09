@@ -21,6 +21,10 @@ Some examples of the kind of queries that may be performed using this data produ
 * Determining the average horizontal and vertical wind speeds by hour
 * Calculating the average horizontal distance covered per day of the mission
 
+## Database Model
+This data product is a readshift database with staging tables (`stg_rems_env` and `stg_rems_adr`) loaded from the s3 bucket, as well as a fact table (`measures`) and dimension tables (`location` and `time`). The figure below depicts the relationships in the data model.
+
+![data_model](img/data_model.png)
 
 ## Datasets Used
 There are 2 main datasets used from NASA's Planertary Data System on the Mars Curiosity Rover Environment Monitoring Station (REMS) found [here](https://atmos.nmsu.edu/PDS/data/mslrem_1001/):
