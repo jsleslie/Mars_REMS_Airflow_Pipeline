@@ -52,8 +52,8 @@ local_relative_humidity| FLOAT  |  local relative humidity at humidity sensor (%
 | time_id  | VARCHAR  | generated primary key  |
 |  sol | INT  | day of the mission  |
 | timestamp  | BIGINT  | number of seconds since noon 1-Jan-2000 (seconds) |
-| lmst  |  VARCHAR |  Local Mean Solar Time. It is in the format SSSSSMHH:MM:SS.sss where: <br>SS  - Sol number (00000-99999)<br>M   - sol/time separator<br>HH  - hour (0-23)<br>MM  - minute (0-59)<br>SS  - second (0-59)<br>sss - fractions of second (000-999) |
-| ltst  | VARCHAR  |  Local True Solar Time with respect to the rover position. It is in the format SSSSS HH:MM:SS.sss where:<br>SS  - Sol number (00000-99999)<br>HH  - hour (0-23)<br>MM  - minute (0-59)<br>SS  - second (0-59) |
+| lmst  |  VARCHAR |  Local Mean Solar Time. It is in the format SSSSSMHH:MM:SS.sss where: <br>         SS  - Sol number (00000-99999)<br>         M   - sol/time separator<br>         HH  - hour (0-23)<br>         MM  - minute (0-59)<br>         SS  - second (0-59)<br>         sss - fractions of second (000-999) |
+| ltst  | VARCHAR  |  Local True Solar Time with respect to the rover position. It is in the format SSSSS HH:MM:SS.sss where:<br>         SS  - Sol number (00000-99999)<br>         HH  - hour (0-23)<br>         MM  - minute (0-59)<br>         SS  - second (0-59) |
 | solar_longitude_angle  |  FLOAT | Solar azimuth angle relative to REMS rover frame (degrees)  |
 | solar_zenithal_angle  |  FLOAT |  Solar elevation angle relative to REMS rover frame (degrees)  |
 
@@ -70,12 +70,18 @@ local_relative_humidity| FLOAT  |  local relative humidity at humidity sensor (%
 | rover_yaw  |  FLOAT | counterclockwise rotation angle about the Z-axis  |
 | rover_roll |  FLOAT | counterclockwise rotation angle about the X-axis  |   
 
+## Data Model Rationale
 
+
+## Tools and Technoligies used
+* **Apache Airflow**:
+* **Amazon Redshift**:
+* **Amazon S3**:
 
 ## Datasets Used
 There are 2 main datasets used from NASA's Planertary Data System on the Mars Curiosity Rover Environment Monitoring Station (REMS) found [here](https://atmos.nmsu.edu/PDS/data/mslrem_1001/):
-* **REMS Environment data set**: This data set
-* **REMS Ancillary data set**:
+* **REMS Environment data set**: This data set contains enviromental characteristics of the Mars atmospher measured each hour.
+* **REMS Ancillary data set**: This data set records changes in the rovers position relative to its landing site.
 
 
 ## Airflow DAG Overview
@@ -83,7 +89,7 @@ An overview of the ETL pipeline is provided in the Directed Acyclic Graph (DAG) 
 
 ![capstone_dag](img/capstone_dag.png)
 
-
+## Local Testing
 
 ## References
 
