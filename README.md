@@ -9,6 +9,12 @@ Udacity Data Engineering Capstone Project
 ## Project Summary
 The goal of this project is to provide an SQL-queryable data warehouse for analysts to analyze data collected from the Mars Curiosity Rover. To this end, the project combines multiple data sets on environmental observations and rover telemetry to organise it into an Amazon Redshift data warehouse via an Apache Airflow managed data pipeline. As part of this work, the data will be uploaded to S3 after which the data will be read from S3, then loaded into staging tables in Redshift before the creation of fact and dimension tables. In the final step, data quality checks are performed on the output tables to verify the health of the pipeline output. 
 
+## Background
+The Mars Curiosity Rover was launched on November 26, 2011 and continues to conduct experiments and collect data on the Martian surface. August 6, 2021 marked the rovers nineth year of operations covering over 3,000 days.
+
+![background_img](https://mars.nasa.gov/internal_resources/687)
+[Source: NASA. Mars Curiosity Rover -  Mission Timeline Summary](https://mars.nasa.gov/msl/timeline/summary/)
+
 ## Use Cases
 This data product may be applied to a range of use cases including:
 * Deepening our understanding of Mars' seasonal conditions 
@@ -42,6 +48,7 @@ An overview of the ETL pipeline is provided in the Directed Acyclic Graph (DAG) 
 ## References
 
 - [Jet Propulsion Laboratory. Mars Science Laboratory (MSL) Software Interface Specification (SIS) Rover Environmental Monitoring Station (REMS) Experiment Data Record (EDR). Jan 31, 2013.](https://atmos.nmsu.edu/PDS/data/mslrem_0001/DOCUMENT/MSL_REMS_EDR_SIS.PDF)  
+- [Jet Propulsion Laboratory. Mars Science Laboratory (MSL) Fact Sheet. Nov 17, 2014.](https://mars.nasa.gov/system/internal_resources/details/original/605_MSL_Fact_Sheet.pdf) 
 - [The Open University. OpenMars Ozone Column Database. February 2019](https://ordo.open.ac.uk/articles/dataset/OpenMARS_ozone_column_database/7315430)
 - [Baum, Mark. REMS Data Downloader. Accessed December 4, 2021.](https://github.com/markmbaum/REMS)
 - [Programmatic Ponderings. DevOps for DataOps: Building a CI/CD Pipeline for Apache Airflow DAGs](https://programmaticponderings.com/tag/apache-airflow/)
