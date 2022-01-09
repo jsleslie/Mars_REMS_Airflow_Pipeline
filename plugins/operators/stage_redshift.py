@@ -42,7 +42,7 @@ class StageToRedshiftOperator(BaseOperator):
         self.region = region
 
     def execute(self, context):
-        aws_hook = AwsBaseHook(self.aws_credentials_id, client_type = 's3')
+        aws_hook = AwsBaseHook(self.aws_credentials_id, client_type="s3")
         credentials = aws_hook.get_credentials()
         redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
 
@@ -54,6 +54,6 @@ class StageToRedshiftOperator(BaseOperator):
             s3_loc,
             credentials.access_key,
             credentials.secret_key,
-            self.region
+            self.region,
         )
         redshift.run(formatted_sql)

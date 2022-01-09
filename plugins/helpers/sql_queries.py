@@ -1,5 +1,5 @@
 class SqlQueries:
-    create_tables = ("""
+    create_tables = """
         CREATE TABLE IF NOT EXISTS public.stg_REMS_ENV (
                 sol INT NOT NULL,
                 timestamp BIGINT NOT NULL,
@@ -61,9 +61,9 @@ class SqlQueries:
                 rover_yaw FLOAT,
                 rover_roll FLOAT
         );
-    """)
-    
-    measures_table_insert = ("""
+    """
+
+    measures_table_insert = """
         SELECT  (e.sol::VARCHAR || '_' || 
                  row_number() OVER (PARTITION BY e.sol ORDER BY e.timestamp)::VARCHAR) AS measure_id,
                  e.sol,
@@ -80,9 +80,9 @@ class SqlQueries:
         LEFT JOIN stg_rems_adr a
         ON (e.sol = a.sol)
         AND (e.timestamp = a.timestamp) 
-    """)
+    """
 
-    location_table_insert = ("""
+    location_table_insert = """
         SELECT distinct 
                 (rover_position_x::VARCHAR || '_'
                         || rover_position_y::VARCHAR || '_'
@@ -95,9 +95,9 @@ class SqlQueries:
                 rover_yaw,
                 rover_roll
         FROM stg_rems_adr
-    """)
+    """
 
-    time_table_insert = ("""
+    time_table_insert = """
         SELECT (s.sol::VARCHAR || '_' || s.timestamp::VARCHAR) AS time_id,
                 s.sol, 
                 s.timestamp, 
@@ -118,4 +118,4 @@ class SqlQueries:
                 LEFT OUTER JOIN stg_rems_adr a
                 ON (e.sol = a.sol)
                 AND (e.timestamp = a.timestamp)) s
-    """)
+    """

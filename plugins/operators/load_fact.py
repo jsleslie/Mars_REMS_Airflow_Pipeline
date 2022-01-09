@@ -36,7 +36,7 @@ class LoadFactOperator(BaseOperator):
 
     def execute(self, context):
 
-        aws_hook = AwsBaseHook(self.aws_credentials_id, client_type = 's3')
+        aws_hook = AwsBaseHook(self.aws_credentials_id, client_type="s3")
         credentials = aws_hook.get_credentials()
         redshift = PostgresHook(postgres_conn_id=self.conn_id)
 
