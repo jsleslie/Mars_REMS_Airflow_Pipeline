@@ -87,18 +87,15 @@ with DAG(
         task_id="Run_data_quality_checks",
         dq_checks=[
             {
-                "check_sql":
-                "SELECT COUNT(*) FROM measures WHERE measure_id is null",
+                "check_sql": "SELECT COUNT(*) FROM measures WHERE measure_id is null",
                 "expected_result": 0,
             },
             {
-                "check_sql":
-                "SELECT COUNT(*) FROM time WHERE  time_id is null",
+                "check_sql": "SELECT COUNT(*) FROM time WHERE  time_id is null",
                 "expected_result": 0,
             },
             {
-                "check_sql":
-                "SELECT COUNT(*) FROM location WHERE  location_id is null",
+                "check_sql": "SELECT COUNT(*) FROM location WHERE  location_id is null",
                 "expected_result": 0,
             },
         ],
