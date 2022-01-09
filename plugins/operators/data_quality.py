@@ -1,5 +1,4 @@
 from airflow.hooks.postgres_hook import PostgresHook
-from airflow.providers.amazon.aws.hooks.base_aws import AwsBaseHook
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
@@ -26,8 +25,6 @@ class DataQualityOperator(BaseOperator):
 
     def execute(self, context):
 
-        aws_hook = AwsBaseHook(self.aws_credentials_id, client_type="s3")
-        credentials = aws_hook.get_credentials()
         redshift_hook = PostgresHook("redshift")
 
         for check in self.dq_checks:
@@ -40,10 +37,12 @@ class DataQualityOperator(BaseOperator):
 
             if records[0] == exp_result:
                 self.log.info(
-                    f"Data quality check {self.dq_checks.index(check)} on table {sql.split(' ')[3]} passed"
+                    f"""Data quality check {self.dq_checks.index(check)}
+                     on table {sql.split(' ')[3]} passed"""
                 )
 
             else:
                 raise ValueError(
-                    f"Data quality check {self.dq_checks.index(check)} failed on table {sql.split(' ')[3]}"
+                    f"""Data quality check {self.dq_checks.index(check)}
+                     failed on table {sql.split(' ')[3]}"""
                 )

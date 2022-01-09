@@ -14,7 +14,7 @@ class StageToRedshiftOperator(BaseOperator):
     SECRET_ACCESS_KEY '{}'
     REGION '{}'
     IGNOREHEADER 1
-    CSV 
+    CSV
     """
 
     @apply_defaults

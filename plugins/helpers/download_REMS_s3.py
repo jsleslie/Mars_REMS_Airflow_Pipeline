@@ -1,9 +1,7 @@
 import logging
 import os
-import sys
 import bs4
 import requests
-import multiprocessing as mp
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 
 # -------------------------------------------------------------------------------
@@ -12,8 +10,11 @@ from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 # output directory
 outdir = "tmp"
 
+
 # rename join for creating urls/paths with single backslashes
-join = lambda *args: "/".join(args)
+def join(*args):
+    return "/".join(args)
+
 
 # base directory of data archive
 baseurl = "https://atmos.nmsu.edu/PDS/data/mslrem_1001/"
@@ -52,8 +53,11 @@ adr_cols = [
 # -------------------------------------------------------------------------------
 # FUNCTIONS
 
+
 # pull file from url and convert it to a string
-get_file = lambda url: requests.get(url).content.decode("utf-8")
+def get_file(url):
+    return requests.get(url).content.decode("utf-8")
+
 
 # get linked files in a single web page, from its url string
 def get_links(url):
@@ -66,7 +70,8 @@ def get_links(url):
     return links
 
 
-def download(url, record_type, sol, colnums, targ_cols, outdir, folder_name):
+def download(url, record_type, sol, colnums,
+             targ_cols, outdir, folder_name):
     # extract data
     table = get_file(url)
     # remove unwanted values
@@ -94,7 +99,8 @@ def download(url, record_type, sol, colnums, targ_cols, outdir, folder_name):
     folder_name = folder_name
     s3_key = f"{folder_name}/{local_file_path.split('/')[-1]}"
     logging.info(
-        f"local_file_path: {local_file_path}, bucket_name: {bucket_name}, key: {s3_key}"
+        f"""local_file_path: {local_file_path},
+         bucket_name: {bucket_name}, key: {s3_key}"""
     )
 
     logging.info("Uploading CSV to S3 with S3HOOK")
@@ -128,10 +134,10 @@ def run_extract(targ_cols, record_type, labelname, folder_name):
         if "COLUMN_NUMBER" in lines[i]:
             # get the column number
             line = lines[i]
-            colnum = int(line[line.index("=") + 1 :].strip()) - 1
+            colnum = int(line[line.index("=") + 1:].strip()) - 1
             # get the column name/description from the following line
             line = lines[i + 1]
-            colname = line[line.index("=") + 1 :].strip().replace('"', "")
+            colname = line[line.index("=") + 1:].strip().replace('"', "")
             # save the column num and name
             name2num[colname] = colnum
 

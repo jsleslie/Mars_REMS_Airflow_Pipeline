@@ -12,7 +12,7 @@ class SqlQueries:
                 volume_mixing_ratio FLOAT,
                 local_relative_humidity FLOAT
         );
-    
+
         CREATE TABLE IF NOT EXISTS public.stg_REMS_ADR (
                 sol INT NOT NULL,
                 timestamp BIGINT NOT NULL,
@@ -64,8 +64,10 @@ class SqlQueries:
     """
 
     measures_table_insert = """
-        SELECT  (e.sol::VARCHAR || '_' || 
-                 row_number() OVER (PARTITION BY e.sol ORDER BY e.timestamp)::VARCHAR) AS measure_id,
+        SELECT  (e.sol::VARCHAR || '_' ||
+                 row_number() OVER
+                 (PARTITION BY e.sol ORDER BY e.timestamp)::VARCHAR
+                 ) AS measure_id,
                  e.sol,
                 (a.rover_position_x::VARCHAR || '_'
                         || a.rover_position_y::VARCHAR || '_'
@@ -79,11 +81,11 @@ class SqlQueries:
         FROM stg_rems_env e
         LEFT JOIN stg_rems_adr a
         ON (e.sol = a.sol)
-        AND (e.timestamp = a.timestamp) 
+        AND (e.timestamp = a.timestamp)
     """
 
     location_table_insert = """
-        SELECT distinct 
+        SELECT distinct
                 (rover_position_x::VARCHAR || '_'
                         || rover_position_y::VARCHAR || '_'
                         || rover_position_z::VARCHAR) AS location_id,
@@ -99,18 +101,23 @@ class SqlQueries:
 
     time_table_insert = """
         SELECT (s.sol::VARCHAR || '_' || s.timestamp::VARCHAR) AS time_id,
-                s.sol, 
-                s.timestamp, 
-                s.lmst, 
-                s.ltst, 
+                s.sol,
+                s.timestamp,
+                s.lmst,
+                s.ltst,
                 s.solar_longitude_angle,
                 s.solar_zenithal_angle
         FROM
-                (SELECT distinct 
-                        CASE WHEN e.sol IS NULL THEN a.sol ELSE e.sol END AS sol,
-                        CASE WHEN e.timestamp IS NULL THEN a.timestamp ELSE e.timestamp END AS timestamp,
-                        CASE WHEN e.lmst IS NULL THEN a.lmst ELSE e.lmst END AS lmst,
-                        CASE WHEN e.ltst IS NULL THEN a.ltst ELSE a.ltst END AS ltst,
+                (SELECT distinct
+                        CASE WHEN e.sol IS NULL
+                                THEN a.sol ELSE e.sol END AS sol,
+                        CASE WHEN e.timestamp IS NULL
+                                THEN a.timestamp ELSE e.timestamp
+                                END AS timestamp,
+                        CASE WHEN e.lmst IS NULL
+                                THEN a.lmst ELSE e.lmst END AS lmst,
+                        CASE WHEN e.ltst IS NULL
+                                THEN a.ltst ELSE a.ltst END AS ltst,
                         a.solar_longitude_angle,
                         a.solar_zenithal_angle
 

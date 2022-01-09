@@ -1,5 +1,4 @@
 from airflow.hooks.postgres_hook import PostgresHook
-from airflow.providers.amazon.aws.hooks.base_aws import AwsBaseHook
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
@@ -37,8 +36,6 @@ class LoadDimensionOperator(BaseOperator):
 
     def execute(self, context):
 
-        aws_hook = AwsBaseHook(self.aws_credentials_id, client_type="s3")
-        credentials = aws_hook.get_credentials()
         redshift = PostgresHook(postgres_conn_id=self.conn_id)
 
         self.log.info(f"Inserting data into {self.table} dimension table")
