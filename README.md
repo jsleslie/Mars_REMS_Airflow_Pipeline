@@ -89,18 +89,18 @@ An overview of the ETL pipeline is provided in the Directed Acyclic Graph (DAG) 
 ## Local Testing
 Assuming you have docker and AWS CLI already installed, the following steps may be used to test this data pipeline using a local docker-based instance of Apache Airflow 2.0:
 
-#### 1. AWS Redshift Setup
-Launch the redshift cluster using the shell command:
-    ```
-    aws redshift create-cluster --node-type ra3.4xlarge --number-of-nodes 2 --master-username <CLUSTER USERNAME> --master-user-password <CLUSTER PASSWORD> --cluster-identifier <CLUSTER NAME> --iam-roles <CLUSTER ARN> --profile <AWS PROFILE>
-    ```
-    Note: This cluster may be closed as required using the below command
-    ```
-    aws redshift delete-cluster --cluster-identifier <CLUSTER NAME> --skip-final-cluster-snapshot --profile <AWS PROFILE>
-    ```
+#### A. AWS Redshift Setup
+    * Launch the redshift cluster using the shell command:
+        ```
+        aws redshift create-cluster --node-type ra3.4xlarge --number-of-nodes 2 --master-username <CLUSTER USERNAME> --master-user-password <CLUSTER PASSWORD> --cluster-identifier <CLUSTER NAME> --iam-roles <CLUSTER ARN> --profile <AWS PROFILE>
+        ```
+        Note: This cluster may be closed as required using the below command
+        ```
+        aws redshift delete-cluster --cluster-identifier <CLUSTER NAME> --skip-final-cluster-snapshot --profile <AWS PROFILE>
+        ```
 
 
-#### 2. Airflow Setup
+#### B. Airflow Setup
     1. Build the docker image using the shell command:
         ```
         ./mwaa-local-env build-image
