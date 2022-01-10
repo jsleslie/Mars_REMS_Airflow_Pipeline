@@ -3,7 +3,7 @@
 ![DAG Testing workflow](https://github.com/jsleslie/Mars_REMS_Airflow_Pipeline/actions/workflows/test_dags.yml/badge.svg)   ![S3 Sync workflow](https://github.com/jsleslie/Mars_REMS_Airflow_Pipeline/actions/workflows/sync_dags.yml/badge.svg)
 
 ## Project Summary
-The goal of this project is to provide an SQL-queryable data warehouse for analysts to analyze data collected from the Mars Curiosity Rover. To this end, the project combines multiple data sets on environmental observations and rover telemetry to organise it into an Amazon Redshift data warehouse via an Apache Airflow managed data pipeline. As part of this work, the data will be uploaded to S3 after which the data will be read from S3, then loaded into staging tables in Redshift before the creation of fact and dimension tables. In the final step, data quality checks are performed on the output tables to verify the health of the pipeline output. Separately, this reposity employs Github Actions to test the DAG files, plugins, operators and requirements and automatically sync them with AWS S3 for use in an Amazon Managed Workflow for Apache Airflow (MWAA).
+The goal of this project is to provide an SQL-queryable data warehouse for analysts to analyze data collected from the Mars Curiosity Rover. To this end, the project combines multiple data sets on environmental observations and rover telemetry to organise it into an Amazon Redshift data warehouse via an Apache Airflow managed data pipeline. As part of this work, the data will be uploaded to S3 after which the data will be read from S3, then loaded into staging tables in Redshift before the creation of fact and dimension tables. In the final step, data quality checks are performed on the output tables to verify the health of the pipeline output. Separately, this repository employs Github Actions to test the DAG files, plugins, operators and requirements and automatically sync them with AWS S3 for use in an Amazon Managed Workflow for Apache Airflow (MWAA).
 
 ## Background
 The Mars Curiosity Rover was launched on November 26, 2011 and continues to conduct experiments and collect data on the Martian surface. August 6, 2021 marked the rovers nineth year of operations covering over 3,000 days.
@@ -19,12 +19,12 @@ This data product may be applied to a range of use cases including:
 
 ## Queries
 Some examples of the kind of queries that may be performed using this data product include:
-* Determining the daily extreemes of temperature, pressure, and humidity observed by the rover
+* Determining the daily extremes of temperature, pressure, and humidity observed by the rover
 * Determining the average horizontal and vertical wind speeds by hour
 * Calculating the average horizontal distance covered per day of the mission
 
 ## Database Model
-This data product is a readshift database with staging tables (`stg_rems_env` and `stg_rems_adr`) loaded from the s3 bucket, as well as a fact table (`measures`) and dimension tables (`location` and `time`). The figure below depicts the relationships in the data model.
+This data product is a redshift database with staging tables (`stg_rems_env` and `stg_rems_adr`) loaded from the s3 bucket, as well as a fact table (`measures`) and dimension tables (`location` and `time`). The figure below depicts the relationships in the data model.
 
 ![data_model](img/data_model.png)
 
@@ -77,7 +77,7 @@ local_relative_humidity| FLOAT  |  local relative humidity at humidity sensor (%
 
 ## Datasets Used
 There are 2 main datasets used from NASA's Planertary Data System on the Mars Curiosity Rover Environment Monitoring Station (REMS) found [here](https://atmos.nmsu.edu/PDS/data/mslrem_1001/):
-* **REMS Environment data set**: This data set contains enviromental characteristics of the Mars atmospher measured each hour.
+* **REMS Environment data set**: This data set contains enviromental characteristics of the Mars atmosphere measured each hour.
 * **REMS Ancillary data set**: This data set records changes in the rovers position relative to its landing site.
 
 
@@ -99,48 +99,48 @@ An overview of the ETL pipeline is provided in the Directed Acyclic Graph (DAG) 
 Assuming you have docker and AWS CLI already installed, the following steps may be used to test this data pipeline using a local docker-based instance of Apache Airflow 2.0:
 
 #### A. AWS Redshift Setup
-    * Launch the redshift cluster using the shell command:
-        ```
-        aws redshift create-cluster --node-type ra3.4xlarge --number-of-nodes 2 --master-username <CLUSTER USERNAME> --master-user-password <CLUSTER PASSWORD> --cluster-identifier <CLUSTER NAME> --iam-roles <CLUSTER ARN> --profile <AWS PROFILE>
-        ```
-        Note: This cluster may be closed as required using the below command
-        ```
-        aws redshift delete-cluster --cluster-identifier <CLUSTER NAME> --skip-final-cluster-snapshot --profile <AWS PROFILE>
-        ```
+Launch the redshift cluster using the shell command:
+    ```
+    aws redshift create-cluster --node-type ra3.4xlarge --number-of-nodes 2 --master-username <CLUSTER USERNAME> --master-user-password <CLUSTER PASSWORD> --cluster-identifier <CLUSTER NAME> --iam-roles <CLUSTER ARN> --profile <AWS PROFILE>
+    ```
+    Note: This cluster may be closed as required using the below command
+    ```
+    aws redshift delete-cluster --cluster-identifier <CLUSTER NAME> --skip-final-cluster-snapshot --profile <AWS PROFILE>
+    ```
 
 
 #### B. Airflow Setup
-    1. Build the docker image using the shell command:
-        ```
-        ./mwaa-local-env build-image
-        ```
-    2. Launch the docker instance using the shell command:
-        ```
-        ./mwaa-local-env start
-        ```
+1. Build the docker image using the shell command:
+    ```
+    ./mwaa-local-env build-image
+    ```
+2. Launch the docker instance using the shell command:
+    ```
+    ./mwaa-local-env start
+    ```
 
-    3. Launch the Airflow UI at [http://localhost:8080/home](http://localhost:8080/home)
+3. Launch the Airflow UI at [http://localhost:8080/home](http://localhost:8080/home)
 
-    4. Enter default credentials username: `admin` and password: `test` 
+4. Enter default credentials username: `admin` and password: `test` 
 
-    5. Create connections under the UI Admin menu and selecting `Connections`
-        **AWS Credentials Connection**
-        - Enter the following for your AWS credentials connection
-            * Conn Id: `s3_connection`
-            * Conn Type: `Amazon Web Services`
-            * Login: `Your AWS Access key ID`
-            * Password: `Your AWS Secret Access Key`
-        - Save connection
+5. Create connections under the UI Admin menu and selecting `Connections`
+    **AWS Credentials Connection**
+    - Enter the following for your AWS credentials connection
+        * Conn Id: `s3_connection`
+        * Conn Type: `Amazon Web Services`
+        * Login: `Your AWS Access key ID`
+        * Password: `Your AWS Secret Access Key`
+    - Save connection
 
-        **Redshift Cluster Connection**
-        - Enter the following to setup the Redshift connection
-            * Conn Id: `redshift`
-            * Conn Type: `Postgres`
-            * Host: `Your Redshift ARN`
-            * Schema: `dev`
-            * Login: `Your Redshift username`
-            * Password: `Your Redshift password`
-            * Port: `5439`
+    **Redshift Cluster Connection**
+    - Enter the following to setup the Redshift connection
+        * Conn Id: `redshift`
+        * Conn Type: `Postgres`
+        * Host: `Your Redshift ARN`
+        * Schema: `dev`
+        * Login: `Your Redshift username`
+        * Password: `Your Redshift password`
+        * Port: `5439`
 
 
 
