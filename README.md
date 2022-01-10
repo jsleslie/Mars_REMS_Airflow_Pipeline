@@ -73,7 +73,7 @@ local_relative_humidity| FLOAT  |  local relative humidity at humidity sensor (%
 * **Apache Airflow**: The operation of this data pipeline is  managed using Apache Airflow to allow the owner to more easily run, diagnose and troubleshoot performance issues.
 * **AWS Redshift**: Amazon Web Services(AWS) Redshift is the datawarehouse solution of choice given its co-location with the cloud data storage service Amazon S3. The database provides the platform for query execution.
 * **AWS S3**: After downloading the source data files, they are uploaded to an S3 bucket for downstream use in the data pipeline. A separate bucket is used to sync the DAG files, plugins and operators for using Amazon Managed Workflow for Apache Airflow (MWAA) under a fully cloud-deployed model
-* **Github Actions**: Github Actions are used in this repository to test the DAG files, plugins, operators and requirements for issues and for their automated syncing to AWS S3 for MWAA. This allows for a faster iteration process offline before an MWAA is initiated.
+* **Github Actions**: Github Actions are used in this repository to test the DAG files, plugins, operators and requirements for issues and for their automated syncing to AWS S3 for MWAA. This allows for a faster iteration process offline before an MWAA is initiated. Ideas on how to implement this are based on Gary Stafford's article entitled "DevOps for DataOps: Building a CI/CD Pipeline for Apache Airflow DAGs." 
 
 ## Datasets Used
 There are 2 main datasets used from NASA's Planertary Data System on the Mars Curiosity Rover Environment Monitoring Station (REMS) found [here](https://atmos.nmsu.edu/PDS/data/mslrem_1001/):
@@ -85,6 +85,15 @@ There are 2 main datasets used from NASA's Planertary Data System on the Mars Cu
 An overview of the ETL pipeline is provided in the Directed Acyclic Graph (DAG) below:
 
 ![capstone_dag](img/capstone_dag.png)
+* **Initialize_tables**: This step is a Postgres Operator which creates the staging, fact and dimension tables in AWS Redshift.
+* **download_REMS_to_S3**: This step builds on [Mark Baum's REMS environment local data downloader](https://github.com/markmbaum/REMS) to collect environemtal and positional data of the Curiosity mars rover and upload it to an S3 bucket as csv files in their respective sub-directories.
+* **Stage_REMS_ADR_Redshift**: Using the raw data uploaded to S3, this step stages the rover positional data in Redshift using the custom StageToRedshiftOperator. 
+* **Stage_REMS_ENV_Redshift**: Likewise, this step involves the staging of environmental data in Redshift using the custom StageToRedshiftOperator.
+* **Load_measures_fact_table**: This step creates the `measures` fact table using the staging tables.
+* **Load_location_dimension_table**: This step creates the `location` dimension table from the staging tables.
+* **Load_time_dimension_table**: This step creates the `time dimension` table from the staging tables.
+* **Run_data_quality_checks**: Lastly, this step checks the fact and dimension tables created to ensure the desired outputs were generated.
+
 
 ## Local Testing
 Assuming you have docker and AWS CLI already installed, the following steps may be used to test this data pipeline using a local docker-based instance of Apache Airflow 2.0:
