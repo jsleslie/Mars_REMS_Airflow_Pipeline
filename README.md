@@ -100,13 +100,14 @@ Assuming you have docker and AWS CLI already installed, the following steps may 
 
 #### A. AWS Redshift Setup
 Launch the redshift cluster using the shell command:
-    ```
-    aws redshift create-cluster --node-type ra3.4xlarge --number-of-nodes 2 --master-username <CLUSTER USERNAME> --master-user-password <CLUSTER PASSWORD> --cluster-identifier <CLUSTER NAME> --iam-roles <CLUSTER ARN> --profile <AWS PROFILE>
-    ```
-    Note: This cluster may be closed as required using the below command
-    ```
-    aws redshift delete-cluster --cluster-identifier <CLUSTER NAME> --skip-final-cluster-snapshot --profile <AWS PROFILE>
-    ```
+```
+aws redshift create-cluster --node-type ra3.4xlarge --number-of-nodes 2 --master-username <CLUSTER USERNAME> --master-user-password <CLUSTER PASSWORD> --cluster-identifier <CLUSTER NAME> --iam-roles <CLUSTER ARN> --profile <AWS PROFILE>
+```
+
+Note: This cluster may be closed as required using the below command
+```
+aws redshift delete-cluster --cluster-identifier <CLUSTER NAME> --skip-final-cluster-snapshot --profile <AWS PROFILE>
+```
 
 
 #### B. Airflow Setup
